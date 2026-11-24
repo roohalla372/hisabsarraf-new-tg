@@ -27,18 +27,6 @@ jobs:
         run: |
           test -n "$PRIVATE_SOURCE_TOKEN" || { echo "Missing PRIVATE_SOURCE_TOKEN"; exit 1; }
 
-      - name: Validate public Supabase client configuration
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: |
-          test -n "$VITE_SUPABASE_URL" || { echo "Missing VITE_SUPABASE_URL repository secret"; exit 1; }
-          test -n "$VITE_SUPABASE_ANON_KEY" || { echo "Missing VITE_SUPABASE_ANON_KEY repository secret"; exit 1; }
-          case "$VITE_SUPABASE_URL" in
-            https://*.supabase.co) ;;
-            *) echo "VITE_SUPABASE_URL is not a Supabase HTTPS project URL"; exit 1 ;;
-          esac
-
       - name: Fetch approved version 21 source
         env:
           PRIVATE_SOURCE_TOKEN: ${{ secrets.PRIVATE_SOURCE_TOKEN }}
@@ -61,8 +49,8 @@ jobs:
         working-directory: private-source
         env:
           VITE_BASE_PATH: /
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_SUPABASE_URL: https://tcivyztftnoodobsdxev.supabase.co
+          VITE_SUPABASE_ANON_KEY: sb_publishable_QkTwySOOA9fiUuTRfmAMTQ_WV6JjPS6
         run: npm run build
 
       - name: Configure GitHub Pages
