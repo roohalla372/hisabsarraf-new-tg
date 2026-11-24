@@ -1,4 +1,4 @@
-name: Build and deploy Hesab Sarraf preview
+name: Build and deploy Hesab Sarraf live site
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: public-web-preview
+  group: hisabsarraf-live
   cancel-in-progress: true
 
 jobs:
@@ -27,7 +27,19 @@ jobs:
         run: |
           test -n "$PRIVATE_SOURCE_TOKEN" || { echo "Missing PRIVATE_SOURCE_TOKEN"; exit 1; }
 
-      - name: Fetch approved source from private repository
+      - name: Validate public Supabase client configuration
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          test -n "$VITE_SUPABASE_URL" || { echo "Missing VITE_SUPABASE_URL repository secret"; exit 1; }
+          test -n "$VITE_SUPABASE_ANON_KEY" || { echo "Missing VITE_SUPABASE_ANON_KEY repository secret"; exit 1; }
+          case "$VITE_SUPABASE_URL" in
+            https://*.supabase.co) ;;
+            *) echo "VITE_SUPABASE_URL is not a Supabase HTTPS project URL"; exit 1 ;;
+          esac
+
+      - name: Fetch approved version 21 source
         env:
           PRIVATE_SOURCE_TOKEN: ${{ secrets.PRIVATE_SOURCE_TOKEN }}
         run: |
@@ -36,33 +48,21 @@ jobs:
             --depth 1 --branch delivery/v21-independent \
             https://github.com/roohalla372/q7v-n4x-k9p2-z8m61.git private-source
 
-      - name: Verify preview banner is present
-        working-directory: private-source
-        run: |
-          grep -Fq 'پیش‌نمایش' src/App.jsx || {
-            echo "Build blocked: the preview-only label is missing."
-            exit 1
-          }
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Configure public deployment path
-        working-directory: private-source
-        run: |
-          sed -i 's|/q7v-n4x-k9p2-z8m61/|/hisabsarraf-new-tg/|g' vite.config.js
-
       - name: Install dependencies
         working-directory: private-source
         run: npm install
 
-      - name: Build isolated preview (no real database)
+      - name: Build production site for custom domain
         working-directory: private-source
         env:
-          VITE_SUPABASE_URL: https://preview-disabled.invalid
-          VITE_SUPABASE_ANON_KEY: preview-only-no-database-connection
+          VITE_BASE_PATH: /
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
 
       - name: Configure GitHub Pages
@@ -82,6 +82,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Publish preview website
+      - name: Publish live website
         id: deployment
         uses: actions/deploy-pages@v4
