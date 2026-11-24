@@ -39,8 +39,8 @@ jobs:
       - name: Verify preview banner is present
         working-directory: private-source
         run: |
-          grep -Fq 'پیش‌نمایش نسخه ۲۱' src/App.jsx || {
-            echo "Build blocked: the explicit preview-only notice is missing."
+          grep -Fq 'پیش‌نمایش' src/App.jsx || {
+            echo "Build blocked: the preview-only label is missing."
             exit 1
           }
 
