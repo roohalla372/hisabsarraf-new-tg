@@ -1,0 +1,89 @@
+name: Build and deploy approved Hesab Sarraf web release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: public-web-release
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out public deployment repository
+        uses: actions/checkout@v4
+
+      - name: Validate required secrets
+        env:
+          PRIVATE_SOURCE_TOKEN: ${{ secrets.PRIVATE_SOURCE_TOKEN }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          test -n "$PRIVATE_SOURCE_TOKEN" || { echo "Missing PRIVATE_SOURCE_TOKEN"; exit 1; }
+          test -n "$VITE_SUPABASE_URL" || { echo "Missing VITE_SUPABASE_URL"; exit 1; }
+          test -n "$VITE_SUPABASE_ANON_KEY" || { echo "Missing VITE_SUPABASE_ANON_KEY"; exit 1; }
+
+      - name: Fetch approved source from private repository
+        env:
+          PRIVATE_SOURCE_TOKEN: ${{ secrets.PRIVATE_SOURCE_TOKEN }}
+        run: |
+          AUTH_HEADER="$(printf 'x-access-token:%s' "$PRIVATE_SOURCE_TOKEN" | base64 -w0)"
+          git -c "http.extraheader=AUTHORIZATION: basic $AUTH_HEADER" clone             --depth 1 --branch delivery/v21-independent             https://github.com/roohalla372/q7v-n4x-k9p2-z8m61.git private-source
+
+      - name: Block preview-only builds
+        working-directory: private-source
+        run: |
+          if grep -Fq 'پیش‌نمایش نسخه ۲۱' src/App.jsx; then
+            echo "Deployment blocked: private source still identifies this build as preview-only."
+            exit 1
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: private-source/package.json
+
+      - name: Configure public deployment path
+        working-directory: private-source
+        run: |
+          sed -i 's|/q7v-n4x-k9p2-z8m61/|/hisabsarraf-new-tg/|g' vite.config.js
+
+      - name: Install dependencies
+        working-directory: private-source
+        run: npm install
+
+      - name: Build web application
+        working-directory: private-source
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: npm run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: private-source/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v4
