@@ -20,4 +20,4 @@ The workflow intentionally blocks deployment while the source still identifies i
 
 ## Current status
 
-Deployment pipeline scaffold only. The application has not yet been approved for live financial operations.
+Release build requested from private source branch `delivery/v21-independent` at commit `8b4dfd50a544c4a0a1bbbcf50d7744ebfd1fd90e`. GitHub Actions will build the static browser output and publish it to GitHub Pages. This release is for login-page verification; the application has not yet been approved for live financial operations.
