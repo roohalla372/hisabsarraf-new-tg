@@ -14,8 +14,9 @@ The selected preview branch is `work/v22-device-layout-refinement-20261126`. The
 
 ## Current source revision
 
-- Latest mobile navigation repair merged into the selected private source branch: `80b1f88d6e78c2bbfe9517ed2f4ca315cdb77f65`.
-- The repair suppresses duplicate mobile navigation rows on the home dashboard; it preserves existing icon definitions, routes, handlers, and accounting behavior.
+- Latest mobile navigation repair: `80b1f88d6e78c2bbfe9517ed2f4ca315cdb77f65`.
+- Desktop-site mode correction: phone browsers that expose a wide desktop viewport while retaining a narrow physical screen are now classified into the laptop composition. Laptop-specific dashboard sizing and the 11-item desktop toolbar are also enabled at compact desktop viewport widths; tablet classification remains separate.
+- The change is limited to device-layout detection and CSS presentation. It does not alter icon definitions, navigation handlers, routes, accounting logic, authentication, or Supabase data.
 
 
 - Private source branch: `work/v22-device-layout-refinement-20261126`
@@ -23,3 +24,7 @@ The selected preview branch is `work/v22-device-layout-refinement-20261126`. The
 - Updates the existing 14-icon row to use the same 11-item toolbar definition as the reference. The existing navigation handlers are retained. The rendered layout still requires visual QA on all four device classes.
 
 A successful source build alone is not proof of a successful Pages deployment. Verify the latest GitHub Actions run and the live site before treating this revision as published. The browser build is not a certification that login, AI runtime behavior, or live financial operations have been tested.
+
+
+- Device-layout correction source commit: `c3087712ffb759313526283a98b000b4458851e3` (CSS); JSX device-detection commit: `3e9cba873a9fd393c1acd2dbfa8de1243a444fca`.
+- The resulting live page must still be verified in Android/iOS desktop-site mode and on a physical laptop before the layout is considered accepted.
