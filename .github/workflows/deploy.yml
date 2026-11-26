@@ -33,7 +33,7 @@ jobs:
         run: |
           AUTH_HEADER="$(printf 'x-access-token:%s' "$PRIVATE_SOURCE_TOKEN" | base64 -w0)"
           git -c "http.extraheader=AUTHORIZATION: basic $AUTH_HEADER" clone \
-            --depth 1 --branch delivery/v21-independent \
+            --depth 1 --branch work/v22-device-layout-refinement-20261126 \
             https://github.com/roohalla372/q7v-n4x-k9p2-z8m61.git private-source
 
       - name: Set up Node.js
