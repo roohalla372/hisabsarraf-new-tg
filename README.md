@@ -8,8 +8,14 @@ This repository is the public deployment surface for Hesab Sarraf.
 
 ## Release pipeline
 
-GitHub Actions fetches the temporary preview source branch `work/v22-device-layout-refinement-20261126`, builds the static browser application, and deploys the generated output to GitHub Pages. The build uses the existing public Supabase project URL and publishable browser key. No database schema, user records, financial records, backend functions, or secrets are modified by this deployment.
+GitHub Actions in this public repository checks out this deployment repository, securely clones the selected branch from the private source repository using `PRIVATE_SOURCE_TOKEN`, runs `npm install` and `npm run build`, uploads only `private-source/dist`, and publishes that artifact to GitHub Pages. The deployment repository is therefore the publishing bridge; the private source repository remains authoritative.
 
-## Current release
+The selected preview branch is `work/v22-device-layout-refinement-20261126`. The build uses the existing public Supabase project URL and publishable browser key. It does not run database migrations or modify database schema, user records, financial records, backend functions, or secrets.
 
-A deployment has been triggered for version 21 source commit `8b4dfd50a544c4a0a1bbbcf50d7744ebfd1fd90e`. This release includes the approved login-page updates and the pre-login AI help interface. The browser build is not a certification that login or AI runtime behavior has been tested, and the application is not being declared approved for live financial operations.
+## Current source revision
+
+- Private source branch: `work/v22-device-layout-refinement-20261126`
+- Source commit: `bf0dfa06c6d34abe33c29b4592ffb4fe39096aa8`
+- Includes the latest V22 device-layout CSS refinement and fixed mobile record-action bar.
+
+A successful source build alone is not proof of a successful Pages deployment. Verify the latest GitHub Actions run and the live site before treating this revision as published. The browser build is not a certification that login, AI runtime behavior, or live financial operations have been tested.
