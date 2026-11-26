@@ -30,3 +30,14 @@ A successful source build alone is not proof of a successful Pages deployment. V
 - Follow-up device classifier commit: `00c47c6b6d03a21a0adcb531d3164d705406358d`. It distinguishes physical phone hardware from the browser's requested desktop viewport using touch capability and the shortest physical screen side, so resizing a laptop browser does not turn it into a phone layout.
 - Device-layout correction source commit: `c3087712ffb759313526283a98b000b4458851e3` (CSS); JSX device-detection commit: `3e9cba873a9fd393c1acd2dbfa8de1243a444fca`.
 - The resulting live page must still be verified in Android/iOS desktop-site mode and on a physical laptop before the layout is considered accepted.
+
+
+## Laptop layout and navigation numbering — 2026-11-26
+
+- Private source revision: `88fc3f4937a8468d6f0e37147f024620b0c5ecd3`.
+- The Sarraf workspace now displays stable page numbers 01–24 across the dashboard, page headings, desktop toolbar and mobile feature list.
+- The seven main menus are numbered 01–07. Their submenu entries use stable hierarchical identifiers such as 02.03; the same submenu identifier is retained on desktop and mobile, even when an item is intentionally omitted from one menu.
+- Laptop toolbar icons are larger, labels have an 11px minimum, and the 11-item row scrolls horizontally instead of shrinking the icons when the browser viewport is narrow.
+- Narrow laptop windows retain the laptop composition and reflow dashboard panels; they do not switch to the phone navigation solely because the viewport is narrow.
+- Source build passed. Physical laptop, tablet, phone and browser desktop-site visual QA is still required before calling the layout fully verified.
+- No database migration, Supabase data modification, customer/transaction/balance change, or accounting logic change was made.
