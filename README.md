@@ -26,5 +26,7 @@ The selected preview branch is `work/v22-device-layout-refinement-20261126`. The
 A successful source build alone is not proof of a successful Pages deployment. Verify the latest GitHub Actions run and the live site before treating this revision as published. The browser build is not a certification that login, AI runtime behavior, or live financial operations have been tested.
 
 
+
+- Follow-up device classifier commit: `00c47c6b6d03a21a0adcb531d3164d705406358d`. It distinguishes physical phone hardware from the browser's requested desktop viewport using touch capability and the shortest physical screen side, so resizing a laptop browser does not turn it into a phone layout.
 - Device-layout correction source commit: `c3087712ffb759313526283a98b000b4458851e3` (CSS); JSX device-detection commit: `3e9cba873a9fd393c1acd2dbfa8de1243a444fca`.
 - The resulting live page must still be verified in Android/iOS desktop-site mode and on a physical laptop before the layout is considered accepted.
