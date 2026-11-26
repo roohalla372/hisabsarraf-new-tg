@@ -8,7 +8,7 @@ This repository is the public deployment surface for Hesab Sarraf.
 
 ## Release pipeline
 
-GitHub Actions fetches the approved source branch `delivery/v21-independent`, builds the static browser application, and deploys the generated output to GitHub Pages. The build uses the existing public Supabase project URL and publishable browser key. No database schema, user records, financial records, backend functions, or secrets are modified by this deployment.
+GitHub Actions fetches the temporary preview source branch `work/v22-device-layout-refinement-20261126`, builds the static browser application, and deploys the generated output to GitHub Pages. The build uses the existing public Supabase project URL and publishable browser key. No database schema, user records, financial records, backend functions, or secrets are modified by this deployment.
 
 ## Current release
 
