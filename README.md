@@ -14,6 +14,10 @@ The selected preview branch is `work/v22-device-layout-refinement-20261126`. The
 
 ## Current source revision
 
+- Latest mobile navigation repair merged into the selected private source branch: `80b1f88d6e78c2bbfe9517ed2f4ca315cdb77f65`.
+- The repair suppresses duplicate mobile navigation rows on the home dashboard; it preserves existing icon definitions, routes, handlers, and accounting behavior.
+
+
 - Private source branch: `work/v22-device-layout-refinement-20261126`
 - Source commit: `f5a02d7431bd19850bf50ece09bf1bd6bb3c0be4`
 - Updates the existing 14-icon row to use the same 11-item toolbar definition as the reference. The existing navigation handlers are retained. The rendered layout still requires visual QA on all four device classes.
