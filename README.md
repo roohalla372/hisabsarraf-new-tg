@@ -15,7 +15,7 @@ The selected preview branch is `work/v22-device-layout-refinement-20261126`. The
 ## Current source revision
 
 - Private source branch: `work/v22-device-layout-refinement-20261126`
-- Source commit: `81225f9892be43504f44a2825d4a6a1262e4d3cd`
-- Includes the laptop-only 11-column equal-width toolbar override and a rule that hides the phone-only bottom dock on tablet, laptop, and monitor. The source build completed successfully. The rendered layout still requires visual QA on all four device classes.
+- Source commit: `f5a02d7431bd19850bf50ece09bf1bd6bb3c0be4`
+- Updates the existing 14-icon row to use the same 11-item toolbar definition as the reference. The existing navigation handlers are retained. The rendered layout still requires visual QA on all four device classes.
 
 A successful source build alone is not proof of a successful Pages deployment. Verify the latest GitHub Actions run and the live site before treating this revision as published. The browser build is not a certification that login, AI runtime behavior, or live financial operations have been tested.
