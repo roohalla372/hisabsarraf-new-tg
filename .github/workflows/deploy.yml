@@ -1,4 +1,4 @@
-name: Build and deploy Hesab Sarraf live site
+name: Build and deploy Hesab Sarraf live site — V22 device layout preview
 
 on:
   workflow_dispatch:
