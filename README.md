@@ -15,7 +15,7 @@ The selected preview branch is `work/v22-device-layout-refinement-20261126`. The
 ## Current source revision
 
 - Private source branch: `work/v22-device-layout-refinement-20261126`
-- Source commit: `bf0dfa06c6d34abe33c29b4592ffb4fe39096aa8`
-- Includes the latest V22 device-layout CSS refinement and fixed mobile record-action bar.
+- Source commit: `36a9367d38a91a6bc51de304900e745b26431d8b`
+- Includes the laptop-only 11-icon toolbar refinement, removal of the simulated logo/title strip, and centered operation date. Mobile layout was not changed.
 
 A successful source build alone is not proof of a successful Pages deployment. Verify the latest GitHub Actions run and the live site before treating this revision as published. The browser build is not a certification that login, AI runtime behavior, or live financial operations have been tested.
